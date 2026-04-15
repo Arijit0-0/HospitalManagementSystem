@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Doctor Desk{% endblock title %}
+
+{% block body %}
+<section class="container section-space">
+    <div class="panel-card panel-card--narrow">
+        <div class="panel-card__header">
+            <p class="eyebrow">Doctor Registry</p>
+            <h2>Add or update physician details</h2>
+            <p>Keep specialties and department information available for the booking team.</p>
+        </div>
+        <form action="/doctors" method="post" class="app-form">
+            <div class="form-group">
+                <label for="doctor-email">Email address</label>
+                <input type="email" class="form-control" id="doctor-email" name="email" value="{{ current_user.email }}" required>
+            </div>
+            <div class="form-group">
+                <label for="doctorname">Doctor name</label>
+                <input type="text" class="form-control" id="doctorname" name="doctorname" placeholder="Enter doctor name" required>
+            </div>
+            <div class="form-group">
+                <label for="dept">Department</label>
+                <input type="text" class="form-control" id="dept" name="dept" placeholder="Enter specialty or department" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Save Doctor Profile</button>
+        </form>
+    </div>
+</section>
+{% endblock body %}

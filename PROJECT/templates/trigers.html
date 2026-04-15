@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Activity Log{% endblock title %}
+
+{% block body %}
+<section class="container section-space">
+    <div class="table-shell">
+        <div class="table-shell__header">
+            <div>
+                <p class="eyebrow">Audit History</p>
+                <h2>Patient activity trigger log</h2>
+            </div>
+            <span class="badge-soft">{{ posts|length }} events</span>
+        </div>
+        <div class="table-responsive">
+            <table class="table app-table">
+                <thead>
+                    <tr>
+                        <th>TID</th>
+                        <th>PID</th>
+                        <th>Email</th>
+                        <th>Name</th>
+                        <th>Action</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for post in posts %}
+                    <tr>
+                        <th scope="row">{{ post.tid }}</th>
+                        <td>{{ post.pid }}</td>
+                        <td>{{ post.email }}</td>
+                        <td>{{ post.name }}</td>
+                        <td>{{ post.action }}</td>
+                        <td>{{ post.timestamp }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock body %}

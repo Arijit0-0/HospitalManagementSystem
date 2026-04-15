@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: careaxis-hms
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --chdir PROJECT main:app
+    healthCheckPath: /
+    envVars:
+      - key: USE_SQLITE
+        value: "true"
+      - key: SECRET_KEY
+        generateValue: true

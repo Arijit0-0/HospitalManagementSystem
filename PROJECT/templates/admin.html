@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard{% endblock title %}
+
+{% block body %}
+<section class="container section-space">
+    <div class="section-heading">
+        <p class="eyebrow">Admin Control Center</p>
+        <h2>High-level operational view for system management.</h2>
+    </div>
+
+    <div class="summary-grid">
+        <article class="summary-card">
+            <span class="summary-card__label">Doctors</span>
+            <strong>{{ metrics.total_doctors }}</strong>
+            <p>Profiles available inside the clinical directory.</p>
+        </article>
+        <article class="summary-card">
+            <span class="summary-card__label">Appointments</span>
+            <strong>{{ metrics.total_patients }}</strong>
+            <p>Bookings stored in the patient appointment table.</p>
+        </article>
+        <article class="summary-card">
+            <span class="summary-card__label">Users</span>
+            <strong>{{ metrics.total_users }}</strong>
+            <p>Registered accounts across admin, doctor, and patient roles.</p>
+        </article>
+    </div>
+</section>
+
+<section class="container section-space dashboard-showcase">
+    <div class="table-shell">
+        <div class="table-shell__header">
+            <div>
+                <p class="eyebrow">Recent Users</p>
+                <h2>Newest registered accounts</h2>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table app-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in recent_users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.usertype }}</td>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="table-shell">
+        <div class="table-shell__header">
+            <div>
+                <p class="eyebrow">Recent Activity</p>
+                <h2>Latest audit entries</h2>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table app-table">
+                <thead>
+                    <tr>
+                        <th>TID</th>
+                        <th>Patient</th>
+                        <th>Action</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in recent_activity %}
+                    <tr>
+                        <td>{{ entry.tid }}</td>
+                        <td>{{ entry.name }}</td>
+                        <td>{{ entry.action }}</td>
+                        <td>{{ entry.timestamp }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock body %}

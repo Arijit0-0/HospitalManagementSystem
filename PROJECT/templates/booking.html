@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Appointments{% endblock title %}
+
+{% block body %}
+<section class="container section-space">
+    <div class="table-shell">
+        <div class="table-shell__header">
+            <div>
+                <p class="eyebrow">Appointment Records</p>
+                <h2>{% if current_user.usertype == "Doctor" %}All patient bookings{% else %}My bookings{% endif %}</h2>
+            </div>
+            <span class="badge-soft">{{ query|length }} records</span>
+        </div>
+        <div class="table-responsive">
+            <table class="table app-table">
+                <thead>
+                    <tr>
+                        <th>PID</th>
+                        <th>Email</th>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>Gender</th>
+                        <th>Slot</th>
+                        <th>Disease</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Department</th>
+                        <th>Phone</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for post in query %}
+                    <tr>
+                        <th scope="row">{{ post.pid }}</th>
+                        <td>{{ post.email }}</td>
+                        <td>{{ post.name }}</td>
+                        <td><span class="status-pill status-pill--{{ appointment_status(post)|lower|replace(' ', '-') }}">{{ appointment_status(post) }}</span></td>
+                        <td>{{ post.gender }}</td>
+                        <td>{{ post.slot }}</td>
+                        <td>{{ post.disease }}</td>
+                        <td>{{ post.date }}</td>
+                        <td>{{ post.time }}</td>
+                        <td>{{ post.dept }}</td>
+                        <td>{{ post.number }}</td>
+                        <td><a href="/edit/{{ post.pid }}" class="btn btn-sm btn-outline-primary">Edit</a></td>
+                        <td><a href="/delete/{{ post.pid }}" onclick="return confirm('Are you sure you want to delete this booking?');" class="btn btn-sm btn-outline-danger">Delete</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock body %}

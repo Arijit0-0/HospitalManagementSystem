@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block title %}Reports{% endblock title %}
+
+{% block body %}
+<section class="container section-space">
+    <div class="section-heading">
+        <p class="eyebrow">Management Reports</p>
+        <h2>Operational insights for appointments and department demand.</h2>
+    </div>
+
+    <div class="summary-grid">
+        <article class="summary-card">
+            <span class="summary-card__label">Today</span>
+            <strong>{{ status_summary['Today'] }}</strong>
+            <p>Appointments scheduled for the current date.</p>
+        </article>
+        <article class="summary-card">
+            <span class="summary-card__label">Upcoming</span>
+            <strong>{{ status_summary['Upcoming'] }}</strong>
+            <p>Future bookings currently on the calendar.</p>
+        </article>
+        <article class="summary-card">
+            <span class="summary-card__label">Completed</span>
+            <strong>{{ status_summary['Completed'] }}</strong>
+            <p>Appointments dated before today.</p>
+        </article>
+    </div>
+</section>
+
+<section class="container section-space section-tools">
+    <div class="panel-card panel-card--narrow">
+        <div class="panel-card__header">
+            <p class="eyebrow">Export Friendly</p>
+            <h2>Printable management report</h2>
+            <p>Use the browser print dialog to generate a clean PDF summary for submission or review meetings.</p>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="window.print()">Print Report</button>
+    </div>
+</section>
+
+<section class="container section-space">
+    <div class="summary-grid">
+        {% for slot_name, slot_count in slot_rows %}
+        <article class="summary-card">
+            <span class="summary-card__label">{{ slot_name|title }} Shift</span>
+            <strong>{{ slot_count }}</strong>
+            <p>Appointments scheduled in this time slot.</p>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="container section-space dashboard-showcase">
+    <div class="panel-card">
+        <div class="panel-card__header">
+            <p class="eyebrow">Department Demand</p>
+            <h2>Appointments by department</h2>
+        </div>
+        <div class="mini-list">
+            {% for dept_name, dept_count in department_rows %}
+            <div class="mini-list__item">
+                <div>
+                    <strong>{{ dept_name }}</strong>
+                    <small>Booked appointments by specialty</small>
+                </div>
+                <span class="badge-soft">{{ dept_count }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="table-shell">
+        <div class="table-shell__header">
+            <div>
+                <p class="eyebrow">Recent Records</p>
+                <h2>Latest patient appointments</h2>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table app-table">
+                <thead>
+                    <tr>
+                        <th>PID</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for post in recent_patients %}
+                    <tr>
+                        <td>{{ post.pid }}</td>
+                        <td>{{ post.name }}</td>
+                        <td>{{ post.dept }}</td>
+                        <td>{{ post.date }}</td>
+                        <td>{{ post.time }}</td>
+                        <td><span class="status-pill status-pill--{{ appointment_status(post)|lower|replace(' ', '-') }}">{{ appointment_status(post) }}</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock body %}

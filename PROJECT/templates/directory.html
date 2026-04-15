@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Doctor Directory{% endblock title %}
+
+{% block body %}
+<section class="container section-space">
+    <div class="section-heading">
+        <p class="eyebrow">Clinical Directory</p>
+        <h2>Browse available doctors and departments.</h2>
+    </div>
+
+    <div class="summary-grid">
+        {% for dept_name, dept_count in department_rows %}
+        <article class="summary-card">
+            <span class="summary-card__label">{{ dept_name }}</span>
+            <strong>{{ dept_count }}</strong>
+            <p>Doctors currently available in this department.</p>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="container section-space">
+    <div class="card-grid">
+        {% for doctor in doctors %}
+        <article class="doctor-card">
+            <p class="eyebrow">Doctor Profile</p>
+            <h3>{{ doctor.doctorname }}</h3>
+            <p class="doctor-card__specialty">{{ doctor.specialty }}</p>
+            {% if doctor.designation %}
+            <p class="doctor-card__designation">{{ doctor.designation }}</p>
+            {% endif %}
+            <a href="mailto:{{ doctor.email }}">{{ doctor.email }}</a>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock body %}

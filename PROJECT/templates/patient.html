@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}Patient Booking{% endblock title %}
+
+{% block body %}
+<section class="container section-space">
+    <div class="dashboard-grid">
+        <aside class="panel-card info-rail">
+            <img src="{{ url_for('static', filename='images/doc.jpg') }}" class="rail-image" alt="Medical team">
+            <div class="panel-card__header">
+                <p class="eyebrow">Appointment Intake</p>
+                <h2>Plan a visit with structured patient details.</h2>
+            </div>
+            <ul class="rail-list">
+                <li>Pick the preferred shift and consultation date.</li>
+                <li>Map the appointment to the right department.</li>
+                <li>Keep contact details accurate for follow-up.</li>
+            </ul>
+        </aside>
+
+        <div class="panel-card">
+            <div class="panel-card__header">
+                <p class="eyebrow">Patient Portal</p>
+                <h2>Book a new appointment</h2>
+            </div>
+            <form action="/patients" method="post" class="app-form form-grid">
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="email" class="form-control" id="email" value="{{ current_user.email }}" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="name">Patient name</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select class="form-control" id="gender" name="gender" required>
+                        <option value="" selected disabled>Select gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="slot">Preferred slot</label>
+                    <select class="form-control" id="slot" name="slot" required>
+                        <option value="" selected disabled>Select shift</option>
+                        <option value="morning">Morning</option>
+                        <option value="evening">Evening</option>
+                        <option value="night">Night</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="time">Time</label>
+                    <input type="time" class="form-control" id="time" name="time" required>
+                </div>
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <input type="date" class="form-control" id="date" name="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="disease">Primary concern</label>
+                    <input type="text" class="form-control" id="disease" name="disease" placeholder="Symptoms or condition" required>
+                </div>
+                <div class="form-group">
+                    <label for="dept">Specialty</label>
+                    <select class="form-control" id="dept" name="dept" required>
+                        <option value="" selected disabled>Select specialty</option>
+                        {% for specialty in specialty_options %}
+                        <option value="{{ specialty }}">{{ specialty }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group form-grid__wide">
+                    <label>Available doctors</label>
+                    <div class="doctor-mini-list">
+                        {% for doctor in doct %}
+                        <div class="doctor-mini-list__item">
+                            <strong>{{ doctor.doctorname }}</strong>
+                            <span>{{ doctor.specialty }}</span>
+                            {% if doctor.designation %}
+                            <small>{{ doctor.designation }}</small>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="form-group form-grid__wide">
+                    <label for="number">Phone number</label>
+                    <input type="number" class="form-control" id="number" name="number" placeholder="10-digit contact number" required>
+                </div>
+                <div class="form-actions form-grid__wide">
+                    <button type="submit" class="btn btn-primary">Confirm Appointment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock body %}
